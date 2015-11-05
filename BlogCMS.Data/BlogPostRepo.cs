@@ -17,7 +17,7 @@ namespace BlogCMS.Data
 
             StringBuilder query = new StringBuilder();
 
-            query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content ");
+            query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content,c.ContentId ");
             query.Append("from Blog b ");
             query.Append("inner join [User] u ");
             query.Append("on b.WriterID = u.UserID ");
@@ -29,6 +29,28 @@ namespace BlogCMS.Data
                 categories = cn.Query<BlogPost>(query.ToString()).ToList();
             }
             return categories;
+        }
+
+        public void EditBlogPost(BlogPost p)
+        {
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                var pr = new DynamicParameters();
+                pr.Add("Content", p.Content);
+                //pr.Add("DatePosted", p.DatePosted);
+                pr.Add("Title", p.Title);
+                pr.Add("ImageURL", p.ImageURL);
+                pr.Add("ContentId", p.ContentId);
+                pr.Add("BlogID", p.BlogID);
+
+                var sqlQuery = "UPDATE Content SET TheContent = @Content " +
+                               "WHERE ContentID= @ContentId  " +
+                               "UPDATE Blog SET Title = @Title, ImageURL = @ImageURL " +
+                               "WHERE BlogID= @BlogID  ";
+                            
+
+                cn.Execute(sqlQuery, pr);
+            }
         }
 
         public void AddBlogPost(BlogPost p)
@@ -58,7 +80,7 @@ namespace BlogCMS.Data
 
             StringBuilder query = new StringBuilder();
 
-            query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content ");
+            query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content,c.ContentID ");
             query.Append("from Blog b ");
             query.Append("inner join [User] u ");
             query.Append("on b.WriterID = u.UserID ");

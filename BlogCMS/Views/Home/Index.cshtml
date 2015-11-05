@@ -39,6 +39,7 @@ else
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
             @Html.ActionLink("Read More","Details","Blog", new { id = @post.BlogID },null)
             <hr>
+             @Html.ActionLink("Edit Blog Post", "Edit", "Blog", new { BlogId = @post.BlogID }, null)
 
     }
      <!-- Pager -->

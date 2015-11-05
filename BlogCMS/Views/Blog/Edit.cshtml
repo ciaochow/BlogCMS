@@ -1,10 +1,11 @@
 ﻿@using BlogCMS.Model
 @model BlogPost
+
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Add a post</h2>
+<h2>Edit a Post</h2>
 
 <head>
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
@@ -16,9 +17,12 @@
 </head>
 <body>
 
-    @using (Html.BeginForm("Add", "Blog", FormMethod.Post))
+    @using (Html.BeginForm("Edit", "Blog", FormMethod.Post))
     {
         //@Html.EditorForModel
+        @Html.HiddenFor(m => m.ContentId)
+        @Html.HiddenFor(m => m.BlogID)
+
         <label>Title</label>@Html.ValidationMessageFor(m=>m.Title)
         @Html.TextBoxFor(m => m.Title, new {@class="form-control"})
         <br>
@@ -43,9 +47,15 @@
 
 
 
+
+
+
+
+
 <script>
  $('#btnSave').click( function(){
         tinyMCE.triggerSave(true,true);
         $('#Send').submit();
  });
 </script>
+

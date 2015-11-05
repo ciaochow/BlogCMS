@@ -30,5 +30,7 @@ namespace BlogCMS.Model
         
         public string ImageURL { get; set; } //
 
+        public int ContentId { get; set; }
+
     }
 }

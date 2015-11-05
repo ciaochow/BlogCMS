@@ -19,6 +19,24 @@ namespace BlogCMS.Controllers
             return View(post);
         }
 
+        public ActionResult Edit(int BlogId)
+        {
+            var repo = new BlogPostRepo();
+            var post = repo.GetBlogPostById(BlogId);
+
+            return View(post);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(BlogPost post)
+        {
+            var repo = new BlogPostRepo();
+            repo.EditBlogPost(post);
+
+            return View();
+        }
+
         public ActionResult Add()
         {
 
