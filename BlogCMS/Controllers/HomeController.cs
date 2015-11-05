@@ -12,7 +12,9 @@ namespace BlogCMS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            BlogPostRepo repo = new BlogPostRepo();
+            var blogs = repo.GetAllBlogPosts();
+            return View(blogs);
         }
 
         public ActionResult Test()
@@ -21,7 +23,7 @@ namespace BlogCMS.Controllers
             BlogPostRepo repo = new BlogPostRepo();
             var blogs = repo.GetAllBlogPosts();
 
-            return View();
+            return View(blogs);
         }
     }
 }

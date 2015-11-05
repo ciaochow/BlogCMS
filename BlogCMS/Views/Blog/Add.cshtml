@@ -1,0 +1,49 @@
+﻿@using BlogCMS.Model
+@model BlogPost
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add a post</h2>
+
+<head>
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "#mytextarea"
+        });
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm("Add", "Blog", FormMethod.Post))
+    {
+        //@Html.EditorForModel
+        <label>Title</label>@Html.ValidationMessageFor(m=>m.Title)
+        @Html.TextBoxFor(m => m.Title, new {@class="form-control"})
+        <br>
+        <label>Author First Name</label>@Html.ValidationMessageFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        <br>
+        <label>Author Last Name</label>@Html.ValidationMessageFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        <br>@Html.ValidationMessageFor(m => m.Content)
+        <label>Image URL</label>@Html.ValidationMessageFor(m => m.ImageURL)
+        @Html.TextBoxFor(m => m.ImageURL, new { @class = "form-control" })
+        <br>
+        @Html.TextAreaFor(m => m.Content, new { @id="mytextarea"})
+        @*<textarea id="mytextarea"></textarea>*@
+        <input type="submit" id="Send" />
+
+    }
+
+
+
+</body>
+
+<script>
+ $('#btnSave').click( function(){
+        tinyMCE.triggerSave(true,true);
+        $('#Send').submit();
+ });
+</script>

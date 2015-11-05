@@ -3,16 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace BlogCMS.Model
 {
     public class BlogPost
     {
         public string BlogID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Can't be blank")]
+        public string FirstName { get; set; } //
+
+        [Required(ErrorMessage = "Can't be blank")]
+        public string LastName { get; set; } //
+
+        [DataType(DataType.Date)]
         public DateTime DatePosted { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+
+        [Required(ErrorMessage = "Can't be blank")]
+        public string Title { get; set; } //
+
+        [Required(ErrorMessage = "Can't be blank")]
+        public string Content { get; set; } // 
+
+        
+        public string ImageURL { get; set; } //
+
     }
 }

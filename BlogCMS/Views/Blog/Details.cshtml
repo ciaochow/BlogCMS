@@ -1,0 +1,20 @@
+﻿@using BlogCMS.Model
+@model BlogPost
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>
+    <a href="#">@Model.Title</a>
+</h2>
+<p class="lead">
+    by <a href="index.php">@Model.FirstName @Model.LastName</a>
+</p>
+<p><span class="glyphicon glyphicon-time"></span> Posted on @Model.DatePosted</p>
+<hr>
+<img class="img-responsive" src="@Model.ImageURL" alt="">
+<hr>
+<p>@Model.Content</p>
+
+<hr>
