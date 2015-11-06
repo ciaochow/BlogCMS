@@ -9,7 +9,7 @@ using BlogCMS.Model;
 
 namespace BlogCMS.Data
 {
-    public class BlogPostRepo:IBlogPostRepo
+    public class BlogPostRepo : IBlogPostRepo
     {
         public List<BlogPost> GetAllBlogPosts()
         {
@@ -47,7 +47,7 @@ namespace BlogCMS.Data
                                "WHERE ContentID= @ContentId  " +
                                "UPDATE Blog SET Title = @Title, ImageURL = @ImageURL " +
                                "WHERE BlogID= @BlogID  ";
-                            
+
 
                 cn.Execute(sqlQuery, pr);
             }
@@ -77,7 +77,6 @@ namespace BlogCMS.Data
         public BlogPost GetBlogPostById(int id)
         {
             BlogPost post = new BlogPost();
-
             StringBuilder query = new StringBuilder();
 
             query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content,c.ContentID ");
@@ -89,13 +88,29 @@ namespace BlogCMS.Data
             query.Append("WHERE BlogID = @Id");
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
-
-                post = cn.Query<BlogPost>(query.ToString(), new { Id= id }).ToList().First();
+                post = cn.Query<BlogPost>(query.ToString(), new { Id = id }).ToList().First();
             }
 
             return post;
         }
 
+        public void RemoveBlogPost(int blogpostId)
+        {
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                BlogPost post = new BlogPost();
+                var pr = new DynamicParameters();
+                //pr .Add("Content", p.Content);
+                //pr.Add("DatePosted", p.DatePosted);
+                pr.Add("BlogpostId", blogpostId);
+                //pr.Add("ImageURL", p.ImageURL);
+                var sqlQuery = "UPDATE Blog " +
+                               "SET StatusID = '5' " + 
+                               "WHERE BlogID = @BlogpostId";
+                    
+                cn.Execute(sqlQuery, pr);
+            }
+        }
     }
     public interface IBlogPostRepo
     {

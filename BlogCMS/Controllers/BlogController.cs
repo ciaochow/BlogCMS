@@ -57,5 +57,24 @@ namespace BlogCMS.Controllers
             
             return View();
         }
+
+        public ActionResult Remove()
+        {
+
+            //var repo = new BlogPostRepo();
+            var post = new BlogPost();
+
+            return View(post);
+        }
+
+        //[Authorize]
+        //[ValidateInput(false)]
+        public ActionResult Remove(int blogpostId)
+        {
+            var repo = new BlogPostRepo();
+            repo.RemoveBlogPost(blogpostId);
+            //ViewBag.Message = "The blogpost with Title(@)"
+            return RedirectToAction("Index", "Admin", new {message="Blog Post has been deleted."});
+        }
     }
 }

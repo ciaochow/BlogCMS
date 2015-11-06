@@ -20,26 +20,36 @@ else
         <h2>
             <a href="#">@post.Title</a>
         </h2>
-            <p class="lead">
-                by <a href="index.php">@post.FirstName @post.LastName</a>
-            </p>
+        <p class="lead">
+            by <a href="index.php">@post.FirstName @post.LastName</a>
+        </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted</p>
             <hr>
-            if(post.ImageURL == null)
-            {
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-            }
-            else
-            {
-                <img class="img-responsive" src="@post.ImageURL" alt="">
-            }
+        if (post.ImageURL == null)
+        {
+            <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+        }
+        else
+        {
+            <img class="img-responsive" src="@post.ImageURL" alt="">
+        }
 
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-            @Html.ActionLink("Read More","Details","Blog", new { id = @post.BlogID },null)
+        <div style="padding-left: 5px; display: inline-block;">
+            @Html.ActionLink(" Details ", "Details", "Blog", new { id = @post.BlogID }, null)
+        </div>
+        <div style="padding-left: 5px; display: inline-block;">
+            @Html.ActionLink("  Edit Post", "Edit", "Blog", new { BlogId = @post.BlogID }, null)
+        </div>
+        <div style="padding-left: 5px; display: inline-block;">
+            @Html.ActionLink("  Delete Post", "Remove", "Blog", new { BlogId = @post.BlogID }, null)
+        </div>
+            
+            <br />
             <hr>
-             @Html.ActionLink("Edit Blog Post", "Edit", "Blog", new { BlogId = @post.BlogID }, null)
+
 
     }
      <!-- Pager -->
