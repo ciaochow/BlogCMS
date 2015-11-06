@@ -23,7 +23,7 @@ else
         <p class="lead">
             by <a href="index.php">@post.FirstName @post.LastName</a>
         </p>
-            <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted</p>
+            <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date</p>
             <hr>
         if (post.ImageURL == null)
         {
@@ -37,15 +37,6 @@ else
         <hr>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-        <div style="padding-left: 5px; display: inline-block;">
-            @Html.ActionLink(" Details ", "Details", "Blog", new { id = @post.BlogID }, null)
-        </div>
-        <div style="padding-left: 5px; display: inline-block;">
-            @Html.ActionLink("  Edit Post", "Edit", "Blog", new { BlogId = @post.BlogID }, null)
-        </div>
-        <div style="padding-left: 5px; display: inline-block;">
-            @Html.ActionLink("  Delete Post", "Remove", "Blog", new { BlogId = @post.BlogID }, null)
-        </div>
             
             <br />
             <hr>

@@ -88,8 +88,8 @@ namespace BlogCMS.Data
                                "INSERT INTO Content (TheContent) " +
                                "VALUES (@Content); " +
                                "SELECT @id = SCOPE_IDENTITY(); " +
-                               "INSERT INTO Blog (WriterID,ContentID,DatePosted,Title,ImageURL) " +
-                               "VALUES ('1',@id,@DatePosted,@Title,@ImageURL);";
+                               "INSERT INTO Blog (WriterID,ContentID,DatePosted,Title,ImageURL,StatusID) " +
+                               "VALUES ('1',@id,@DatePosted,@Title,@ImageURL,'1');";
                 cn.Execute(sqlQuery, pr);
                 //cn.Query<int>(sqlQuery, pr); 
             }
