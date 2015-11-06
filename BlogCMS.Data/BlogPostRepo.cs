@@ -23,7 +23,7 @@ namespace BlogCMS.Data
             query.Append("on b.WriterID = u.UserID ");
             query.Append("inner join Content c ");
             query.Append("on b.ContentID = c.ContentID ");
-            query.Append("Order By b.StatusID DESC");
+            query.Append("Order By b.StatusID ");
 
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
@@ -133,6 +133,44 @@ namespace BlogCMS.Data
                 cn.Execute(sqlQuery, pr);
             }
         }
+
+        public void PublishPost(int id)
+        {
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                BlogPost post = new BlogPost();
+                var pr = new DynamicParameters();
+                //pr .Add("Content", p.Content);
+                //pr.Add("DatePosted", p.DatePosted);
+                pr.Add("BlogpostId", id);
+                //pr.Add("ImageURL", p.ImageURL);
+                var sqlQuery = "UPDATE Blog " +
+                               "SET StatusID = '2' " +
+                               "WHERE BlogID = @BlogpostId";
+
+                cn.Execute(sqlQuery, pr);
+            }
+        }
+
+        public void UnpublishPost(int id)
+        {
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                BlogPost post = new BlogPost();
+                var pr = new DynamicParameters();
+                //pr .Add("Content", p.Content);
+                //pr.Add("DatePosted", p.DatePosted);
+                pr.Add("BlogpostId", id);
+                //pr.Add("ImageURL", p.ImageURL);
+                // This goes back to pending...
+                var sqlQuery = "UPDATE Blog " +
+                               "SET StatusID = '1' " +
+                               "WHERE BlogID = @BlogpostId";
+
+                cn.Execute(sqlQuery, pr);
+            }
+        }
+
     }
     public interface IBlogPostRepo
     {

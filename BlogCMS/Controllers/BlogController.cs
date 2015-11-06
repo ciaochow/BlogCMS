@@ -58,14 +58,14 @@ namespace BlogCMS.Controllers
             return View();
         }
 
-        public ActionResult Remove()
-        {
+        //public ActionResult Remove()
+        //{
 
-            //var repo = new BlogPostRepo();
-            var post = new BlogPost();
+        //    //var repo = new BlogPostRepo();
+        //    var post = new BlogPost();
 
-            return View(post);
-        }
+        //    return View(post);
+        //}
 
         //[Authorize]
         //[ValidateInput(false)]

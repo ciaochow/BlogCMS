@@ -18,5 +18,19 @@ namespace BlogCMS.Controllers
 
             return View(list);
         }
+
+        public ActionResult Publish(int ID)
+        {
+            var repo = new BlogPostRepo();
+            repo.PublishPost(ID);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Unpublish(int ID)
+        {
+            var repo = new BlogPostRepo();
+            repo.UnpublishPost(ID);
+            return RedirectToAction("Index");
+        }
     }
 }
