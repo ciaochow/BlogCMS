@@ -32,5 +32,7 @@ namespace BlogCMS.Model
 
         public int ContentId { get; set; }
 
+        public int StatusID { get; set; }
+
     }
 }

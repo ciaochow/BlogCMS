@@ -13,7 +13,14 @@
 </p>
 <p><span class="glyphicon glyphicon-time"></span> Posted on @Model.DatePosted</p>
 <hr>
-<img class="img-responsive" src="@Model.ImageURL" alt="">
+@if (Model.ImageURL == null)
+{
+    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+}
+else
+{
+    <img class="img-responsive" src="@Model.ImageURL" alt="">
+}
 <hr>
 <p>@Model.Content</p>
 

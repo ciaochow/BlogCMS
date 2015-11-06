@@ -1,8 +1,81 @@
-﻿
+﻿@using BlogCMS.Model
+@model List<BlogPost>
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Admin Portal</h2>
 
+<div class="row">
+    <table class="table table-bordered" data-height="299" data-row-style="rowStyle" style="margin-top: 10px">
+        <thead style="background-color: #f5f5f5">
+            <tr>
+                <th style="padding-right: 5px">Blog ID</th>
+                <th style="padding-right: 5px">Blog Title</th>
+                <th style="padding-right: 5px">Status</th>
+                <th>Action</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in Model)
+            {
+                <tr>
+                    <td>@post.BlogID</td>
+                    <td>@Html.ActionLink(@post.Title, "Details", "Blog", new { id = post.BlogID }, null)</td>
+                    @if (post.StatusID == 2)
+                    {
+                        <td>Published</td>
+                    }
+                    else if(post.StatusID == 1)
+                    {
+                        <td>Pending</td>
+                    }
+                    else if (post.StatusID == 4)
+                    {
+                        <td>Expired</td>
+                    }
+                    else
+                    {
+                        <td>Archived</td>
+                    }
+
+                    @if (post.StatusID == 1)
+                    {
+                        <td>
+                            @Html.ActionLink("Publish", "Publish", "Admin", new { id = post.BlogID }, new { @class = "btn btn-primary btn-large" })
+                        </td>
+                    }
+                    else if (post.StatusID == 2)
+                    {
+                        <td>
+                            @Html.ActionLink("Unpublish", "Unpublish", "Admin", new { id = post.BlogID }, new { @class = "btn btn-primary btn-large" })
+                        </td>
+                    }
+                    else if (post.StatusID == 4)
+                    {
+                        <td>
+                          
+                        </td>
+                    }
+                    else if (post.StatusID == 5)
+                    {
+                        <td>
+                            @Html.ActionLink("Publish", "Publish", "Admin", new { id = post.BlogID }, new { @class = "btn btn-primary btn-large" })
+                        </td>
+                    }
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Blog", new { BlogId = post.BlogID }, new { @class = "btn btn-default btn-large" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove", "Remove", "Admin", new { blogpostId = post.BlogID }, new { @class = "btn btn-default btn-large" })
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 

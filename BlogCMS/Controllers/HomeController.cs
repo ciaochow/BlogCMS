@@ -13,7 +13,7 @@ namespace BlogCMS.Controllers
         public ActionResult Index()
         {
             BlogPostRepo repo = new BlogPostRepo();
-            var blogs = repo.GetAllBlogPosts();
+            var blogs = repo.GetAllPublishedBlogPosts();
             return View(blogs);
         }
 

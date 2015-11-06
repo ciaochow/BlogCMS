@@ -17,12 +17,34 @@ namespace BlogCMS.Data
 
             StringBuilder query = new StringBuilder();
 
+            query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content,c.ContentId,b.StatusID ");
+            query.Append("from Blog b ");
+            query.Append("inner join [User] u ");
+            query.Append("on b.WriterID = u.UserID ");
+            query.Append("inner join Content c ");
+            query.Append("on b.ContentID = c.ContentID ");
+            query.Append("Order By b.StatusID DESC");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                categories = cn.Query<BlogPost>(query.ToString()).ToList();
+            }
+            return categories;
+        }
+
+        public List<BlogPost> GetAllPublishedBlogPosts()
+        {
+            List<BlogPost> categories = new List<BlogPost>();
+
+            StringBuilder query = new StringBuilder();
+
             query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, c.TheContent as Content,c.ContentId ");
             query.Append("from Blog b ");
             query.Append("inner join [User] u ");
             query.Append("on b.WriterID = u.UserID ");
             query.Append("inner join Content c ");
             query.Append("on b.ContentID = c.ContentID ");
+            query.Append("WHERE b.StatusID = '2'");
 
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
