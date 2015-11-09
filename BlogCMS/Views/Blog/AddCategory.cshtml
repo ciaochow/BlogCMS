@@ -1,0 +1,34 @@
+﻿@using BlogCMS.Model
+@using BlogCMS.Models
+@model List<BlogCMS.Model.Category>
+
+@{
+    ViewBag.Title = "AddCategory";
+}
+@if (!@Model.Any())
+{
+    <p>There are currently no categories.</p>
+}
+else
+{
+    <ul>
+    @foreach (var category in Model)
+    {
+        <li>@category.CategoryName</li>
+    }
+        </ul>
+}
+<h2>AddCategory</h2>
+
+@using (Html.BeginForm("AddCategory", "Blog", FormMethod.Post)){
+<p>
+    <label>Enter new Category:</label>
+    <input type="text" id="Category" name="Category" />
+
+    <button id="submit" class="btn btn-primary">Add</button>
+</p>
+}
+
+
+<div id="Result"></div>
+<div id="Message"></div>

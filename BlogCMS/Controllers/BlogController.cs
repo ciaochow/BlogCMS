@@ -103,5 +103,22 @@ namespace BlogCMS.Controllers
             //ViewBag.Message = "The blogpost with Title(@)"
             return RedirectToAction("Index", "Admin", new {message="Blog Post has been deleted."});
         }
+
+        public ActionResult AddCategory()
+        {
+            var crepo = new CategoryRepo();
+            var list = crepo.GetAllCategories();
+            return View(list);
+
+        }
+
+        [HttpPost]
+        public ActionResult AddCategory(string Category)
+        {
+            var crepo = new CategoryRepo();
+            crepo.AddCategory(Category);
+            var list = crepo.GetAllCategories();
+            return View(list);
+        }
     }
 }

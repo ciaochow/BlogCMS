@@ -9,7 +9,7 @@
     <a href="#">@Model.Title</a>
 </h2>
 <p class="lead">
-    by <a href="index.php">@Model.FirstName @Model.LastName</a>
+    by <a href="">@Model.FirstName @Model.LastName</a>
 </p>
 <p><span class="glyphicon glyphicon-time"></span> Posted on @Model.DatePosted</p>
 <hr>
@@ -21,7 +21,7 @@ else
 {
     <img class="img-responsive" src="@Model.ImageURL" alt="">
 }
-<hr>
-<p>@Model.Content</p>
-
-<hr>
+<hr style="border-top: 3px solid #E8E8E8;">
+<p>@Html.Raw(@Model.Content)</p>
+<hr style="border-top: 3px solid #E8E8E8;">
+<br/>
