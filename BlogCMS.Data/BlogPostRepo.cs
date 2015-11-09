@@ -77,23 +77,26 @@ namespace BlogCMS.Data
 
         public void AddBlogPost(BlogPost p)
         {
+
+            var pr = new DynamicParameters();
+            pr.Add("Content", p.Content);
+            pr.Add("DatePosted", p.DatePosted);
+            pr.Add("Category", p.CategoryId);
+            pr.Add("Title", p.Title);
+            pr.Add("ImageURL", p.ImageURL);
+            var sqlQuery = "DECLARE @id INT  " +
+                           "INSERT INTO Content (TheContent) " +
+                           "VALUES (@Content); " +
+                           "SELECT @id = SCOPE_IDENTITY(); " +
+                           "INSERT INTO Blog (WriterID,ContentID,DatePosted,Title,CategoryID,ImageURL,StatusID) " +
+                           "VALUES ('1',@id,@DatePosted,@Title,@Category,@ImageURL,'1');";
+
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
-                var pr = new DynamicParameters();
-                pr.Add("Content", p.Content);
-                pr.Add("DatePosted", p.DatePosted);
-                pr.Add("Title", p.Title);
-                pr.Add("ImageURL", p.ImageURL);
-                var sqlQuery = "DECLARE @id INT  " +
-                               "INSERT INTO Content (TheContent) " +
-                               "VALUES (@Content); " +
-                               "SELECT @id = SCOPE_IDENTITY(); " +
-                               "INSERT INTO Blog (WriterID,ContentID,DatePosted,Title,ImageURL,StatusID) " +
-                               "VALUES ('1',@id,@DatePosted,@Title,@ImageURL,'1');";
                 cn.Execute(sqlQuery, pr);
                 //cn.Query<int>(sqlQuery, pr); 
             }
-
+            
         }
 
         public BlogPost GetBlogPostById(int id)
@@ -134,11 +137,12 @@ namespace BlogCMS.Data
             }
         }
 
+        // publish and add to archieve
         public void PublishPost(int id)
         {
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
-                BlogPost post = new BlogPost();
+                //BlogPost post = new BlogPost();
                 var pr = new DynamicParameters();
                 //pr .Add("Content", p.Content);
                 //pr.Add("DatePosted", p.DatePosted);
@@ -150,6 +154,53 @@ namespace BlogCMS.Data
 
                 cn.Execute(sqlQuery, pr);
             }
+
+            AddToArchieve(id);
+        }
+
+        public int GetBlogId()
+        {
+            int blogId;
+
+            StringBuilder query = new StringBuilder();
+
+            query.Append("Select Max( BlogID ) as blogId ");
+            query.Append("From Blog ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                blogId = cn.Query<int>(query.ToString()).ToList().FirstOrDefault();
+            }
+
+            return blogId;
+        }
+
+        public void AddToArchieve(int id)
+        {
+            string monthID;
+
+            DateTime now = DateTime.Now;
+            string monthNow = now.ToString("MMMM");
+
+            StringBuilder query1 = new StringBuilder();
+
+            query1.Append("Select ArchieveID ");
+            query1.Append("from Archieve ");
+            query1.Append("where Month = @month ");
+
+            StringBuilder query2 = new StringBuilder();
+
+            query2.Append("Insert Into ArchieveBlogs (ArchieveID, BlogID) ");
+            query2.Append("Values ( @archieveid, @blogid ) ");
+                
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+
+                monthID = cn.Query<string>(query1.ToString(), new { month = monthNow }).ToList().FirstOrDefault();
+
+                cn.Execute(query2.ToString(), new { archieveid = monthID, blogid = id });
+            }
+
         }
 
         public void UnpublishPost(int id)
@@ -171,7 +222,57 @@ namespace BlogCMS.Data
             }
         }
 
+        public List<BlogPost> GetPostsByCategory(string categoryid)
+        {
+            List<BlogPost> posts = new List<BlogPost>();
+
+            StringBuilder query = new StringBuilder();
+
+            query.Append("select BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, d.TheContent as Content, d.ContentId, b.StatusID ");
+            query.Append("from Blog b ");
+            query.Append("inner join [User] u ");
+            query.Append("on b.WriterID = u.UserID ");
+            query.Append("inner join Content d ");
+            query.Append("on b.ContentID = d.ContentID ");
+            query.Append("inner join Category c ");
+            query.Append("on b.CategoryID = c.CategoryID ");
+            query.Append("where c.CategoryID = @Categoryid ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                posts = cn.Query<BlogPost>(query.ToString(), new { Categoryid = categoryid }).ToList();
+            }
+
+            return posts;
+        }
+
+        public List<BlogPost> GetPostsByMonth(string id)
+        {
+            List<BlogPost> posts = new List<BlogPost>();
+
+            StringBuilder query = new StringBuilder();
+
+            query.Append("select b.BlogID, u.FirstName, u.LastName, DatePosted, Title,ImageURL, d.TheContent as Content, d.ContentId, b.StatusID ");
+            query.Append("from Blog b ");
+            query.Append("inner join [User] u ");
+            query.Append("on b.WriterID = u.UserID ");
+            query.Append("inner join Content d ");
+            query.Append("on b.ContentID = d.ContentID ");
+            query.Append("inner join ArchieveBlogs ab ");
+            query.Append("on b.BlogID = ab.BlogID ");
+            query.Append("where ab.ArchieveID = @archieveId ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                posts = cn.Query<BlogPost>(query.ToString(), new { archieveId = id }).ToList();
+            }
+
+            return posts;
+        } 
     }
+
+
+
     public interface IBlogPostRepo
     {
         List<BlogPost> GetAllBlogPosts();

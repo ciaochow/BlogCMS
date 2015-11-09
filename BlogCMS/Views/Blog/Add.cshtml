@@ -1,5 +1,5 @@
 ﻿@using BlogCMS.Model
-@model BlogPost
+@model AddPostVM
 @{
     ViewBag.Title = "Add";
 }
@@ -16,32 +16,33 @@
 </head>
 <body>
 
-    @using (Html.BeginForm("Add", "Blog", FormMethod.Post))
+    @using (Html.BeginForm("AddBlog", "Blog", FormMethod.Post))
     {
-        //@Html.EditorForModel
-        <label>Title</label>@Html.ValidationMessageFor(m=>m.Title)
-        @Html.TextBoxFor(m => m.Title, new {@class="form-control"})
+        <label>Title</label>@Html.ValidationMessageFor(m => m.BlogPost.Title)
+        @Html.TextBoxFor(m => m.BlogPost.Title, new { @class = "form-control" })
         <br>
-        <label>Author First Name</label>@Html.ValidationMessageFor(m => m.FirstName)
-        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        <label>Author First Name</label>@Html.ValidationMessageFor(m => m.BlogPost.FirstName)
+        @Html.TextBoxFor(m => m.BlogPost.FirstName, new { @class = "form-control" })
         <br>
-        <label>Author Last Name</label>@Html.ValidationMessageFor(m => m.LastName)
-        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-        <br>@Html.ValidationMessageFor(m => m.Content)
-        <label>Image URL</label>@Html.ValidationMessageFor(m => m.ImageURL)
-        @Html.TextBoxFor(m => m.ImageURL, new { @class = "form-control" })
+        <label>Author Last Name</label>@Html.ValidationMessageFor(m => m.BlogPost.LastName)
+        @Html.TextBoxFor(m => m.BlogPost.LastName, new { @class = "form-control" })
+
+        <label>Category</label>
+        @Html.DropDownListFor(m => m.BlogPost.CategoryId, Model.CategoryList, "Select a Category", new { @class = "form-control" })
+
+
+        <br>@Html.ValidationMessageFor(m => m.BlogPost.Content)
+        <label>Image URL</label>@Html.ValidationMessageFor(m => m.BlogPost.ImageURL)
+        @Html.TextBoxFor(m => m.BlogPost.ImageURL, new { @class = "form-control" })
         <br>
-        @Html.TextAreaFor(m => m.Content, new { @id="mytextarea"})
+        @Html.TextAreaFor(m => m.BlogPost.Content, new { @id = "mytextarea" })
         @*<textarea id="mytextarea"></textarea>*@
-        <input type="submit" id="Send" />
+        <button class="btn btn-primary" id="Send">Add</button>
+
+        @*<input type="submit" id="Send" />*@
 
     }
-
-
-
 </body>
-
-
 
 <script>
  $('#btnSave').click( function(){

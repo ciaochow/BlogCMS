@@ -39,24 +39,51 @@ namespace BlogCMS.Controllers
 
         public ActionResult Add()
         {
+            CategoryRepo repo = new CategoryRepo();
+            List<Category> categories = repo.GetAllCategories();
 
-            //var repo = new BlogPostRepo();
-            var post = new BlogPost();
+            AddPostVM vm = new AddPostVM();
+            vm.CreateCategoryList(categories);
 
-            return View(post);
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(BlogPost p)
+        public ActionResult AddBlog(AddPostVM vm)
         {
             var time = DateTime.Now;
-            p.DatePosted = time.Date;
+            vm.BlogPost.DatePosted = time.Date;
+
             var repo = new BlogPostRepo();
-            repo.AddBlogPost(p);
-            
-            return View();
+            repo.AddBlogPost(vm.BlogPost);
+
+            int blogId = repo.GetBlogId();
+            repo.AddToArchieve(blogId);
+
+            return RedirectToAction("Add");
         }
+
+        //public ActionResult Add()
+        //{
+
+        //    var repo = new BlogPostRepo();
+        //    var post = new BlogPost();
+
+        //    return View(post);
+        //}
+
+        //[HttpPost]
+        //[ValidateInput(false)]
+        //public ActionResult Add(BlogPost p)
+        //{
+        //    var time = DateTime.Now;
+        //    p.DatePosted = time.Date;
+        //    var repo = new BlogPostRepo();
+        //    repo.AddBlogPost(p);
+
+        //    return View();
+        //}
 
         //public ActionResult Remove()
         //{

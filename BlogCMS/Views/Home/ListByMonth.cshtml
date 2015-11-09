@@ -2,30 +2,28 @@
 @model List<BlogPost>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "ListByMonth";
 }
-
-@*<div class="row">
-    <div class="col-md-8">*@
 
 @if (!Model.Any())
 {
+    <div id="tracker" value="0"></div>
     <p>Something went wrong or we have no posts</p>
 }
 else
 {
+    <div id="tracker" value="1"></div>
     foreach (var post in Model)
-    { 
-
-         <!-- First Blog Post -->
+    {
+        <!-- First Blog Post -->
         <h2>
             <a href="#">@post.Title</a>
         </h2>
         <p class="lead">
             by <a href="index.php">@post.FirstName @post.LastName</a>
         </p>
-            <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date</p>
-            <hr>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date</p>
+        <hr>
         if (post.ImageURL == null)
         {
             <img class="img-responsive" src="http://placehold.it/900x300" alt="">
@@ -38,14 +36,14 @@ else
         <hr>
         <p>@post.Content</p>
         //<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-            
-            <br />
-            <hr>
+        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <br/>
+        <hr>
 
 
     }
-     <!-- Pager -->
+    <!-- Pager -->
     <ul class="pager">
         <li class="previous">
             <a href="#">&larr; Older</a>
@@ -54,6 +52,5 @@ else
             <a href="#">Newer &rarr;</a>
         </li>
     </ul>
-
 
 }

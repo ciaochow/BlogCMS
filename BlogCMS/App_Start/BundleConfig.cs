@@ -28,6 +28,10 @@ namespace BlogCMS
                       "~/Content/site.css",
                       "~/Content/blog-home.css",
                       "~/Content/blog-post.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/script").Include(
+                    "~/Scripts/Views/Category.js",
+                    "~/Scripts/Views/Archieve.js"));
         }
     }
 }

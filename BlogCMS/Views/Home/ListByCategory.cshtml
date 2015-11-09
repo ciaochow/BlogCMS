@@ -2,21 +2,19 @@
 @model List<BlogPost>
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "ListByCategory";
 }
-
-@*<div class="row">
-    <div class="col-md-8">*@
 
 @if (!Model.Any())
 {
+    <div id="tracker" value="0"></div>
     <p>Something went wrong or we have no posts</p>
 }
 else
 {
+    <div id="tracker" value="1"></div>
     foreach (var post in Model)
-    { 
-
+    {
          <!-- First Blog Post -->
         <h2>
             <a href="#">@post.Title</a>
@@ -24,7 +22,7 @@ else
         <p class="lead">
             by <a href="index.php">@post.FirstName @post.LastName</a>
         </p>
-            <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date</p>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date</p>
             <hr>
         if (post.ImageURL == null)
         {
@@ -38,8 +36,8 @@ else
         <hr>
         <p>@post.Content</p>
         //<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-            
+        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
             <br />
             <hr>
 
@@ -57,3 +55,29 @@ else
 
 
 }
+
+
+@*<script type="text/javascript">
+    $(document).ready(function() {
+
+        alert(@Model[0].CategoryId);
+        if($('#tracker').val() === 1 ) {
+            var URL = "/Home/GetCategoryName/" + @Model[0].CategoryId;
+
+            $.ajax({
+                type: "Get",
+                url: URL,
+                dataType: "json",
+                success: function(category) {
+                    $('#categoryname').html("<h2>" + category + "</h2>");
+                },
+                fail: function() {
+
+                },
+                data: {},
+                async: false
+            });
+
+        }
+    });
+        </script>*@

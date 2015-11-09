@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArchieveRepo.cs" />
     <Compile Include="BlogPostRepo.cs" />
     <Compile Include="CategoryRepo.cs" />
     <Compile Include="Connection.cs" />

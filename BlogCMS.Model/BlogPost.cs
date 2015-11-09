@@ -27,6 +27,8 @@ namespace BlogCMS.Model
         [Required(ErrorMessage = "Can't be blank")]
         public string Content { get; set; } // 
 
+        //new add
+        public string CategoryId { get; set; }
         
         public string ImageURL { get; set; } //
 

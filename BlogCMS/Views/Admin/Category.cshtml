@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Category";
+}
+
+<p>
+    <label>Enter new Category:</label>
+    <input type="text" id="Category" name="Category" />
+
+    <button id="AddCategory" class="btn btn-primary">Add</button>
+</p>
+<div id="Result"></div>
+<div id="Message"></div>
+
+@*<script>
+        $(document).ready(function () {
+            ShowCategoryList();
+
+            $("#AddCategory").on('click', function () {
+                AddCategory();
+            });
+        });
+
+        function ShowCategoryList() {
+            $.getJSON("/API/CategoryAPI/", null).done(function (data) {
+                $("#Result").html(createTable(data));
+            }).fail(function () {
+                $("#Result").html("<p>The category list cannot be loaded.</p>");
+            });
+        }
+
+        function AddCategory() {
+            var URL = "/API/CategoryAPI/";
+
+            $.ajax({
+                type: "Post",
+                url: URL,
+                datatype: "json",
+                success: function(newcategory) {
+                    $("#Result").html(createTable(data));
+                    var message = "<h3>Category " + $("#Category").val() + " is added.</h3>";
+                    $("#Message").html(message);
+                    $("#Category").val("");
+                },
+                fail: function() {
+                    $("#Result").html("<p>The category cannot be added.</p>");
+                },
+                data: { category : $("#Category").val()}
+            });
+        }
+
+        //function AddCategory() {
+        //    $.getJSON("/Policy/AddCategoryJ/", { category: $("#Category").val() }).done(function (data) {
+        //        $("#Result").html(createTable(data));
+        //        var message = "<h3>Category " + $("#Category").val() + " is added.</h3>";
+        //        $("#Message").html(message);
+        //        $("#Category").val("");
+        //    }).fail(function () {
+        //        $("#Result").html("<p>The category list cannot be loaded.</p>");
+        //    });
+        //}
+
+        function createTable(data) {
+            var results = "";
+            var rowcounter = 1;
+            results += "<table>";
+            results += "<tr><th>Category</th></tr>";
+            $.each(data, function () {
+                if (rowcounter % 2 == 1) {
+                    results += "<tr class=\"odd\"><td>";
+                } else {
+                    results += "<tr class=\"even\"><td>";
+                }
+                results += this.CategoryName;
+                results += "</td></tr>";
+                rowcounter++;
+            });
+            results += "</table>";
+
+            return results;
+        }
+
+</script>*@
+@section scripts
+{
+    
+    <script src="~/Scripts/Views/Category.js"></script>
+
+}

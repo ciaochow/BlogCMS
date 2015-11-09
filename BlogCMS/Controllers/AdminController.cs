@@ -32,5 +32,10 @@ namespace BlogCMS.Controllers
             repo.UnpublishPost(ID);
             return RedirectToAction("Index");
         }
+
+        public ActionResult Category()
+        {
+            return View();
+        }
     }
 }

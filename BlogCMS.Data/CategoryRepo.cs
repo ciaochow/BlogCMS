@@ -16,7 +16,7 @@ namespace BlogCMS.Data
 
         public CategoryRepo()
         {
-           // connectionString = ConfigurationManager.ConnectionStrings["BlogCMS"].ConnectionString;
+            // connectionString = ConfigurationManager.ConnectionStrings["BlogCMS"].ConnectionString;
         }
 
         public List<Category> GetAllCategories()
@@ -34,5 +34,36 @@ namespace BlogCMS.Data
             }
             return categories;
         }
+
+        public string GetCategory(string id)
+        {
+            string category;
+
+            StringBuilder query = new StringBuilder();
+
+            query.Append("select *  ");
+            query.Append("from Category ");
+            query.Append("where cateogryID = @categoryid ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+               category = cn.Query<Category>(query.ToString(), new { categoryid = id }).FirstOrDefault().ToString();
+            }
+            return category;
+        }
+
+        public void AddCategory(string category)
+        {
+            StringBuilder query = new StringBuilder();
+
+            query.Append("Insert into Category (CategoryName) ");
+            query.Append("Values (@Category) ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                cn.Execute(query.ToString(), new {Category = category});
+            }
+        }
+
     }
 }

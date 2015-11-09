@@ -20,19 +20,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="#">Blog Post CMS</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">About</a>
+                    <a href="/Home/Index/">Main</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit Stuffs<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li>@Html.ActionLink("Edit Category", "Category", "Admin", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="/Home/Index/">Main</a>
                 </li>
             </ul>
         </div>
@@ -69,7 +73,7 @@
                 <h4>Blog Categories</h4>
                 <div class="row">
                     <div class="col-lg-6" id="category1">
-                        <ul class="list-unstyled">
+                        @*<ul class="list-unstyled">
                             <li>
                                 <a href="#">Category Name</a>
                             </li>
@@ -82,11 +86,11 @@
                             <li>
                                 <a href="#">Category Name</a>
                             </li>
-                        </ul>
+                        </ul>*@
                     </div>
                     <!-- /.col-lg-6 -->
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled">
+                    <div class="col-lg-6" id="category2">
+                        @*<ul class="list-unstyled">
                             <li>
                                 <a href="#">Category Name</a>
                             </li>
@@ -99,7 +103,7 @@
                             <li>
                                 <a href="#">Category Name</a>
                             </li>
-                        </ul>
+                        </ul>*@
                     </div>
                     <!-- /.col-lg-6 -->
                 </div>
@@ -107,11 +111,10 @@
             </div>
             <!-- Side Widget Well -->
             <div class="well">
-                <h4>Blog Archieves</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                <h4>Blog Archives</h4>
                 <div class="row">
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled">
+                    <div class="col-lg-6" id="archieve1">
+                        @*<ul class="list-unstyled">
                             <li>
                                 <a href="#">Month</a>
                             </li>
@@ -124,11 +127,11 @@
                             <li>
                                 <a href="#">Month</a>
                             </li>
-                        </ul>
+                        </ul>*@
                     </div>
                     <!-- /.col-lg-6 -->
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled">
+                    <div class="col-lg-6" id="archieve2">
+                        @*<ul class="list-unstyled">
                             <li>
                                 <a href="#">Month</a>
                             </li>
@@ -141,7 +144,7 @@
                             <li>
                                 <a href="#">Month</a>
                             </li>
-                        </ul>
+                        </ul>*@
                     </div>
                     <!-- /.col-lg-6 -->
                 </div>
@@ -162,22 +165,48 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/script")
 @RenderSection("scripts", required: false)
 
 
 </body>
 </html>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
 
+        loadCategory();
 
-    loadCategory();
+        $(".category li").on('click', function () {
 
-});
+            window.location.href = "/Home/ListByCategory?id=" + $(this).text();
+
+            //var URL = "/API/categoryAPI/";
+
+            //alert($(this).val());
+
+            //$.ajax({
+            //    type: "Get",
+            //    url: URL,
+            //    datatype: "json",
+            //    success: function (postList) {
+            //        alert("got it");
+            //        window.location.href = "/Home/ListByCategory?id=" + $(this).text();
+            //        //showPostList();  
+            //    },
+            //    fail: function() {
+            //        alert("no good");
+            //    },
+            //    data: { category : $(this).text() },
+            //    async: false
+            //});
+
+        });
+
+    });
 
 function loadCategory() {
-    $('#category1').html("hihihihihi");
+    //$('#category1').html("hihihihihi");
     var URL = "/API/CategoryAPI/";
 
     $.ajax({
@@ -185,13 +214,7 @@ function loadCategory() {
         url: URL,
         dataType: "json",
         success: function (categories) {
-
             BuildCategoriesLinks(categories);
-
-            //$('#modelbox').val("");
-            //$('#addmodelbox').addClass("hidden");
-            //$('#modellist select').append($("<option></option>").val(model.ModelID).html(model.Model1));
-            //$('#addmodelbox').addClass("hidden");
         },
         fail: function() {
             $('#category2').html("Load fail!");
@@ -204,18 +227,48 @@ function loadCategory() {
 
 function BuildCategoriesLinks(categories) {
 
-    var category1 = $('#category1');
-    category1.append($("<ul id=\"list1\"></ul>"));
-    $('#list1').addClass("list-unstyled");
-    //category1.append($("<ul></ul>").addClass("list-unstyled"));
-    
+    //var URL = "/API/CategoryAPI/";
+    var URL = "/Home/ListByCategory/";
 
-    $.each(categories, function(index, category) {
-        //category1.append($("<li></li>").html($("<a></a>").attr("html", "#").text(category.CategoryName)));
-        category1.append($("<li>").html($("<a></a>").attr("html", "#").text(category.CategoryName)));
+    var category1 = $('#category1');
+    var category2 = $('#category2');
+
+    //category1.append($("<ul></ul>").addClass("list-unstyled"));
+    //category2.append($("<ul></ul>").addClass("list-unstyled"));
+
+    //<ul class="list-unstyled">
+    //                       <li>
+    //                           <a href="#">Category Name</a>
+    //                       </li>
+    //                       <li>
+    //                           <a href="#">Category Name</a>
+    //                       </li>
+    //                       <li>
+    //                           <a href="#">Category Name</a>
+    //                       </li>
+    //                       <li>
+    //                           <a href="#">Category Name</a>
+    //                       </li>
+    //                   </ul>
+    
+    var categorylist1 = $("<div></div>").addClass("category");
+    var categorylist2 = $("<div></div>").addClass("category");
+
+    $.each(categories, function (index, category) {
+        
+        if (index % 2 === 1) {
+            //categorylist = category1;
+            categorylist1.append($("<li></li>").html($("<a></a>").attr("href", URL + category.CategoryID).text(category.CategoryName).val(category.CategoryID)));
+        } else {
+            //categorylist = category2;
+            categorylist2.append($("<li></li>").html($("<a></a>").attr("href", URL + category.CategoryID).text(category.CategoryName).val(category.CategoryID)));
+        }
     });
+
+    category1.append($("<ul></ul>").addClass("list-unstyled").append(categorylist1));
+    category2.append($("<ul></ul>").addClass("list-unstyled").append(categorylist2));
 }
 
 
-</script>
+</script>*@
 
