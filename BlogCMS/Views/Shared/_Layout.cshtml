@@ -20,25 +20,31 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Blog Post CMS</a>
+            @Html.ActionLink("Blog Post CMS", "Index", "Home", null, new {@class = "navbar-brand"})
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/Home/Index/">Main</a>
+                    @Html.ActionLink("Home","Index","Home")
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit Stuffs<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })</li>
-                        <li>@Html.ActionLink("Edit Category", "Category", "Admin", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/Home/Index/">Main</a>
-                </li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit Content<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin",null, new {@class = "navbar-brand"})</li>
+                            }
+                            <li>@Html.ActionLink("Add a Category", "AddCategory", "Blog")</li>
+                            <li>@Html.ActionLink("Add a Post","Add","Blog")</li>
+                        </ul>
+                    </li>
+                }
+                
             </ul>
+            @Html.Partial("_LoginPartial")
         </div>
         <!-- /.navbar-collapse -->
     </div>

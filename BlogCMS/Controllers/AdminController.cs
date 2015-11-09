@@ -11,6 +11,7 @@ namespace BlogCMS.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        [Authorize(Roles="Admin")]
         public ActionResult Index()
         {
             var repo = new BlogPostRepo();
@@ -19,6 +20,7 @@ namespace BlogCMS.Controllers
             return View(list);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Publish(int ID)
         {
             var repo = new BlogPostRepo();
@@ -26,6 +28,7 @@ namespace BlogCMS.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Unpublish(int ID)
         {
             var repo = new BlogPostRepo();

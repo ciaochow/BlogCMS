@@ -8,7 +8,7 @@
 @if (!Model.Any())
 {
     <div id="tracker" value="0"></div>
-    <p>Something went wrong or we have no posts</p>
+    <p>Something went wrong or we have no posts in this category.</p>
 }
 else
 {
@@ -20,10 +20,10 @@ else
             <a href="#">@post.Title</a>
         </h2>
         <p class="lead">
-            by <a href="index.php">@post.FirstName @post.LastName</a>
+            by @post.FirstName @post.LastName
         </p>
-        <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date</p>
-            <hr>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on @post.DatePosted.Date.ToShortDateString()</p>
+        <hr>
         if (post.ImageURL == null)
         {
             <img class="img-responsive" src="http://placehold.it/900x300" alt="">
@@ -33,14 +33,9 @@ else
             <img class="img-responsive" src="@post.ImageURL" alt="">
         }
 
-        <hr>
-        <p>@post.Content</p>
-        //<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
-            <br />
-            <hr>
-
+        <hr style="border-top: 3px solid #E8E8E8;">
+        <p>@Html.Raw(@post.Content)</p>
+        <hr style="border-top: 3px solid #E8E8E8;">
 
     }
      <!-- Pager -->

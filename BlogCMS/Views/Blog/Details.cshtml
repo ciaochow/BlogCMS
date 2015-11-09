@@ -9,9 +9,9 @@
     <a href="#">@Model.Title</a>
 </h2>
 <p class="lead">
-    by <a href="">@Model.FirstName @Model.LastName</a>
+    by @Model.FirstName @Model.LastName
 </p>
-<p><span class="glyphicon glyphicon-time"></span> Posted on @Model.DatePosted</p>
+<p><span class="glyphicon glyphicon-time"></span> Posted on @Model.DatePosted.Date.ToShortDateString()</p>
 <hr>
 @if (Model.ImageURL == null)
 {

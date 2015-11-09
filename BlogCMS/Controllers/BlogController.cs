@@ -60,8 +60,8 @@ namespace BlogCMS.Controllers
 
             int blogId = repo.GetBlogId();
             repo.AddToArchieve(blogId);
-
-            return RedirectToAction("Add");
+            ViewBag.Message = "Your new post has been submitted for approval. Thanks!";
+            return RedirectToAction("Index", "Home");
         }
 
         //public ActionResult Add()
@@ -96,6 +96,7 @@ namespace BlogCMS.Controllers
 
         //[Authorize]
         //[ValidateInput(false)]
+        [Authorize(Roles = "Admin")]
         public ActionResult Remove(int blogpostId)
         {
             var repo = new BlogPostRepo();
