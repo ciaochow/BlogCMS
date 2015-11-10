@@ -35,8 +35,9 @@
                         <ul class="dropdown-menu">
                             @if (User.IsInRole("Admin"))
                             {
-                                <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin",null, new {@class = "navbar-brand"})</li>
-                                <li>@Html.ActionLink("Add a Static Page", "AddStatic", "StaticPage", null, new { @class = "navbar-brand" })</li>
+                                <li>@Html.ActionLink("Blog Dashboard", "Index", "Admin")</li>
+                                <li>@Html.ActionLink("Pages Dashboard", "ManagePages", "Admin")</li>
+                                <li>@Html.ActionLink("Add a Static Page", "AddStatic", "StaticPage")</li>
                             }
                             <li>@Html.ActionLink("Add a Category", "AddCategory", "Blog")</li>
                             <li>@Html.ActionLink("Add a Post","Add","Blog")</li>
@@ -70,14 +71,14 @@
         <!-- Blog Sidebar Widgets Column -->
         <div class="col-md-4">
             <!-- Blog Tags Well -->
-            <div class="well">
+            @*<div class="well">
                 <h4>Blog Tags</h4>
 
                 <!-- /#tags-group -->
                 <div id="tags-group"></div>
 
                 <!-- /.input-group -->
-            </div>
+            </div>*@
             <!-- Blog Categories Well -->
             <div class="well">
                 <h4>Blog Categories</h4>

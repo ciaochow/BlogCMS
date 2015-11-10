@@ -73,6 +73,24 @@ namespace BlogCMS.Data
 
         }
 
+        public List<StaticPage> GetEveryStaticPageThatExists()
+        {
+            List<StaticPage> list = new List<StaticPage>();
+
+            StringBuilder query = new StringBuilder();
+
+            query.Append("select * ");
+            query.Append("from Static");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                list = cn.Query<StaticPage>(query.ToString()).ToList();
+            }
+            return list;
+
+
+        }
+
         public List<BlogPost> GetAllPublishedBlogPosts()
         {
             List<BlogPost> categories = new List<BlogPost>();
@@ -322,6 +340,67 @@ namespace BlogCMS.Data
          
             var sqlQuery = "Insert Into Static (TheContent, Title, LinkText, ImageURL, Active) " +
                         "VALUES (@Content, @Title, @LinkText, @ImageURL,'1');";
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                cn.Execute(sqlQuery, pr);
+                //cn.Query<int>(sqlQuery, pr); 
+            }
+
+        }
+
+        public void DeactivatePageById(int id)
+        {
+            
+            var pr = new DynamicParameters();
+            pr.Add("StaticPageID", id);
+
+
+            var sqlQuery = "Update Static " +
+                        "Set Active = 0 " +
+                        "Where StaticPageID = @StaticPageID; ";
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                cn.Execute(sqlQuery, pr);
+                //cn.Query<int>(sqlQuery, pr); 
+            }
+
+        }
+
+        public void ActivatePageById(int id)
+        {
+
+            var pr = new DynamicParameters();
+            pr.Add("StaticPageID", id);
+
+
+            var sqlQuery = "Update Static " +
+                        "Set Active = 1 " +
+                        "Where StaticPageID = @StaticPageID; ";
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                cn.Execute(sqlQuery, pr);
+                //cn.Query<int>(sqlQuery, pr); 
+            }
+
+        }
+
+        public void UpdatePage(StaticPage p)
+        {
+
+            var pr = new DynamicParameters();
+            pr.Add("StaticPageID", p.StaticPageID);
+            pr.Add("Content", p.Content);
+            pr.Add("LinkText", p.LinkText);
+            pr.Add("Title", p.Title);
+            pr.Add("ImageURL", p.ImageURL);
+            pr.Add("Active", p.Active);
+
+            var sqlQuery = "Update Static " +
+                     "Set TheContent = @Content, Title = @Title, LinkText = @LinkText, ImageURL = @ImageURL, Active = @Active "+
+                     "WHERE StaticPageID = @StaticPageID; ";
 
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {

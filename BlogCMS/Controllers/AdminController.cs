@@ -40,5 +40,17 @@ namespace BlogCMS.Controllers
         {
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ManagePages()
+        {
+            var pages = new List<StaticPage>();
+
+            var repo = new BlogPostRepo();
+            pages = repo.GetEveryStaticPageThatExists(); 
+
+            return View(pages);
+        }
+
     }
 }

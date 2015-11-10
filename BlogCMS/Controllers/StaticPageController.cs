@@ -41,5 +41,43 @@ namespace BlogCMS.Controllers
             return View(page);
         }
 
+        public ActionResult Deactivate(int id)
+        {
+            var brepo = new BlogPostRepo();
+            brepo.DeactivatePageById(id);
+
+            return RedirectToAction("ManagePages", "Admin");
+        }
+
+        public ActionResult Activate(int id)
+        {
+            var brepo = new BlogPostRepo();
+            brepo.ActivatePageById(id);
+
+            return RedirectToAction("ManagePages", "Admin");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var brepo = new BlogPostRepo();
+            var post = brepo.GetPageById(id);
+
+            return View(post);
+
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(StaticPage page)
+        {
+            var brepo = new BlogPostRepo();
+            brepo.UpdatePage(page);
+
+            return RedirectToAction("ManagePages","Admin");
+
+        }
+
+
+
     }
 }
