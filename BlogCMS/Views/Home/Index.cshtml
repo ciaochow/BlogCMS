@@ -41,14 +41,14 @@ else
         int number;
         if (post.Content.Length > 100)
         {
-            number = 100;
+            number = 115;
         }
         else
         {
             number = post.Content.Length;
         }
 
-        <p>@Html.Raw(@post.Content.Substring(0, @number))</p>
+        <p>@Html.Raw(@post.Content.Substring(0, number))</p>
         //<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
             @*<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>*@
             @Html.ActionLink("Read More","Details","Blog", new {id = @post.BlogID},new {@class="btn btn-primary"})
@@ -58,14 +58,14 @@ else
 
     }
      <!-- Pager -->
-    <ul class="pager">
+    @*<ul class="pager">
         <li class="previous">
             <a href="#">&larr; Older</a>
         </li>
         <li class="next">
             <a href="#">Newer &rarr;</a>
         </li>
-    </ul>
+    </ul>*@
 
 
 }

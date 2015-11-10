@@ -417,5 +417,6 @@ namespace BlogCMS.Data
     {
         List<BlogPost> GetAllBlogPosts();
         BlogPost GetBlogPostById(int id);
+
     }
 }

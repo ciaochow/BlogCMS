@@ -34,7 +34,7 @@ namespace BlogCMS.Controllers
             var repo = new BlogPostRepo();
             repo.EditBlogPost(post);
 
-            return View();
+            return RedirectToAction("Index","Home");
         }
 
         public ActionResult Add()
