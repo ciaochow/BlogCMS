@@ -36,14 +36,18 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin",null, new {@class = "navbar-brand"})</li>
+                                <li>@Html.ActionLink("Add a Static Page", "AddStatic", "StaticPage", null, new { @class = "navbar-brand" })</li>
                             }
                             <li>@Html.ActionLink("Add a Category", "AddCategory", "Blog")</li>
                             <li>@Html.ActionLink("Add a Post","Add","Blog")</li>
                         </ul>
                     </li>
                 }
+
+                @Html.Action("_StaticLinks","Home")
                 
             </ul>
+            
             @Html.Partial("_LoginPartial")
         </div>
         <!-- /.navbar-collapse -->

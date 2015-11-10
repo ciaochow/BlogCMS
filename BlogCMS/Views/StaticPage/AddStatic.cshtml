@@ -1,0 +1,43 @@
+﻿@using BlogCMS.Model
+@model StaticPage
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add a Page</h2> 
+
+<head>
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "#mytextarea"
+        });
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm("AddStatic", "StaticPage", FormMethod.Post))
+    {
+        <label>Title</label>@Html.ValidationMessageFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        <br>
+        <label>Link Text</label>@Html.ValidationMessageFor(m => m.LinkText)
+        @Html.TextBoxFor(m => m.LinkText, new { @class = "form-control" })
+        <br>@Html.ValidationMessageFor(m => m.Content)
+        <label>Image URL</label>@Html.ValidationMessageFor(m => m.ImageURL)
+        @Html.TextBoxFor(m => m.ImageURL, new { @class = "form-control" })
+        <br>
+        @Html.TextAreaFor(m => m.Content, new { @id = "mytextarea" })
+        <button class="btn btn-primary" id="Send">Add</button>
+
+    }
+    
+</body>
+
+<script>
+ $('#btnSave').click( function(){
+        tinyMCE.triggerSave(true,true);
+        $('#Send').submit();
+ });
+</script>

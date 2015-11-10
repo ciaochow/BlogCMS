@@ -62,5 +62,15 @@ namespace BlogCMS.Controllers
 
             return View(blogs);
         }
+
+        
+        [ChildActionOnly]
+        public ActionResult _StaticLinks()
+        {
+            var brepo = new BlogPostRepo();
+            var list = brepo.GetAllStaticPages();
+            //"~/Views/Shared/_StaticLinks"
+            return PartialView(list);
+        }
     }
 }

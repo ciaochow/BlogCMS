@@ -32,6 +32,47 @@ namespace BlogCMS.Data
             return categories;
         }
 
+        public StaticPage GetPageById(int id)
+        {
+            var page = new StaticPage();
+
+            StringBuilder query = new StringBuilder();
+
+            var pr = new DynamicParameters();
+            pr.Add("StaticPageID",id);
+
+            query.Append("select StaticPageID, TheContent as Content, Title, LinkText, ImageURL, Active ");
+            query.Append("from Static ");
+            query.Append("WHERE StaticPageID = @StaticPageID; ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                page = cn.Query<StaticPage>(query.ToString(),pr).
+                    First();
+            }
+
+            return page;
+        }
+
+        public List<StaticPage> GetAllStaticPages()
+        {
+            List<StaticPage> list = new List<StaticPage>();
+
+            StringBuilder query = new StringBuilder();
+
+            query.Append("select StaticPageID, LinkText ");
+            query.Append("from Static s ");
+            query.Append("WHERE s.Active = '1' ");
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                list = cn.Query<StaticPage>(query.ToString()).ToList();
+            }
+            return list;
+
+
+        }
+
         public List<BlogPost> GetAllPublishedBlogPosts()
         {
             List<BlogPost> categories = new List<BlogPost>();
@@ -268,7 +309,27 @@ namespace BlogCMS.Data
             }
 
             return posts;
-        } 
+        }
+
+        public void AddStaticPage(StaticPage p)
+        {
+
+            var pr = new DynamicParameters();
+            pr.Add("Content", p.Content);
+            pr.Add("LinkText", p.LinkText);
+            pr.Add("Title", p.Title);
+            pr.Add("ImageURL", p.ImageURL);
+         
+            var sqlQuery = "Insert Into Static (TheContent, Title, LinkText, ImageURL, Active) " +
+                        "VALUES (@Content, @Title, @LinkText, @ImageURL,'1');";
+
+            using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
+            {
+                cn.Execute(sqlQuery, pr);
+                //cn.Query<int>(sqlQuery, pr); 
+            }
+
+        }
     }
 
 

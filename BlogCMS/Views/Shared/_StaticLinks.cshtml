@@ -1,0 +1,10 @@
+﻿@using BlogCMS.Model
+@model List<StaticPage>
+
+@foreach (var page in Model)
+{
+    @*<ul class="nav navbar-nav navbar-right">*@
+        <li>@Html.ActionLink(@page.LinkText, "Show", "StaticPage",new { id = page.StaticPageID },null)</li>
+    @*</ul>*@
+
+}
