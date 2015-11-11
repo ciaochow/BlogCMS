@@ -19,6 +19,7 @@ namespace BlogCMS.Controllers
             return View(post);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int BlogId)
         {
             var repo = new BlogPostRepo();
@@ -28,15 +29,17 @@ namespace BlogCMS.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateInput(false)]
         public ActionResult Edit(BlogPost post)
         {
             var repo = new BlogPostRepo();
             repo.EditBlogPost(post);
-
-            return RedirectToAction("Index","Home");
+            ViewBag.Message = "The post has been edited successfully.";
+            return View("Success");
         }
 
+        [Authorize]
         public ActionResult Add()
         {
             CategoryRepo repo = new CategoryRepo();
@@ -49,6 +52,7 @@ namespace BlogCMS.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateInput(false)]
         public ActionResult AddBlog(AddPostVM vm)
         {
@@ -60,8 +64,18 @@ namespace BlogCMS.Controllers
 
             int blogId = repo.GetBlogId();
             repo.AddToArchieve(blogId);
-            ViewBag.Message = "Your new post has been submitted for approval. Thanks!";
-            return RedirectToAction("Index", "Home");
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Message = "Your new post has been added. Don't forget to publish it so that your users can see it.";
+            }
+            else
+            {
+                ViewBag.Message = "Your new post has been submitted for Admin approval. Thanks!";
+            }
+            
+            //return RedirectToAction("Index", "Home");
+            return View("Success");
         }
 
         //public ActionResult Add()
@@ -101,10 +115,12 @@ namespace BlogCMS.Controllers
         {
             var repo = new BlogPostRepo();
             repo.RemoveBlogPost(blogpostId);
-            //ViewBag.Message = "The blogpost with Title(@)"
-            return RedirectToAction("Index", "Admin", new {message="Blog Post has been deleted."});
+
+            ViewBag.Message = "The post has been deleted. It is still available in Archives.";
+            return View("Success");
         }
 
+        [Authorize]
         public ActionResult AddCategory()
         {
             var crepo = new CategoryRepo();
@@ -114,6 +130,7 @@ namespace BlogCMS.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult AddCategory(string Category)
         {
             var crepo = new CategoryRepo();

@@ -9,6 +9,16 @@ using BlogCMS.Model;
 
 namespace BlogCMS.Data
 {
+    public interface IBlogPostRepo
+    {
+        List<BlogPost> GetAllBlogPosts();
+        List<BlogPost> GetAllPublishedBlogPosts();
+        void EditBlogPost(BlogPost p);
+        void AddBlogPost(BlogPost p);
+        BlogPost GetBlogPostById(int id);
+        void RemoveBlogPost(int blogpostId);
+    }
+
     public class BlogPostRepo : IBlogPostRepo
     {
         public List<BlogPost> GetAllBlogPosts()
@@ -39,7 +49,7 @@ namespace BlogCMS.Data
             StringBuilder query = new StringBuilder();
 
             var pr = new DynamicParameters();
-            pr.Add("StaticPageID",id);
+            pr.Add("StaticPageID", id);
 
             query.Append("select StaticPageID, TheContent as Content, Title, LinkText, ImageURL, Active ");
             query.Append("from Static ");
@@ -47,7 +57,7 @@ namespace BlogCMS.Data
 
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
-                page = cn.Query<StaticPage>(query.ToString(),pr).
+                page = cn.Query<StaticPage>(query.ToString(), pr).
                     First();
             }
 
@@ -155,7 +165,7 @@ namespace BlogCMS.Data
                 cn.Execute(sqlQuery, pr);
                 //cn.Query<int>(sqlQuery, pr); 
             }
-            
+
         }
 
         public BlogPost GetBlogPostById(int id)
@@ -189,9 +199,9 @@ namespace BlogCMS.Data
                 pr.Add("BlogpostId", blogpostId);
                 //pr.Add("ImageURL", p.ImageURL);
                 var sqlQuery = "UPDATE Blog " +
-                               "SET StatusID = '5' " + 
+                               "SET StatusID = '5' " +
                                "WHERE BlogID = @BlogpostId";
-                    
+
                 cn.Execute(sqlQuery, pr);
             }
         }
@@ -251,7 +261,7 @@ namespace BlogCMS.Data
 
             query2.Append("Insert Into ArchieveBlogs (ArchieveID, BlogID) ");
             query2.Append("Values ( @archieveid, @blogid ) ");
-                
+
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
 
@@ -337,7 +347,7 @@ namespace BlogCMS.Data
             pr.Add("LinkText", p.LinkText);
             pr.Add("Title", p.Title);
             pr.Add("ImageURL", p.ImageURL);
-         
+
             var sqlQuery = "Insert Into Static (TheContent, Title, LinkText, ImageURL, Active) " +
                         "VALUES (@Content, @Title, @LinkText, @ImageURL,'1');";
 
@@ -351,7 +361,7 @@ namespace BlogCMS.Data
 
         public void DeactivatePageById(int id)
         {
-            
+
             var pr = new DynamicParameters();
             pr.Add("StaticPageID", id);
 
@@ -399,7 +409,7 @@ namespace BlogCMS.Data
             pr.Add("Active", p.Active);
 
             var sqlQuery = "Update Static " +
-                     "Set TheContent = @Content, Title = @Title, LinkText = @LinkText, ImageURL = @ImageURL, Active = @Active "+
+                     "Set TheContent = @Content, Title = @Title, LinkText = @LinkText, ImageURL = @ImageURL, Active = @Active " +
                      "WHERE StaticPageID = @StaticPageID; ";
 
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
@@ -409,14 +419,5 @@ namespace BlogCMS.Data
             }
 
         }
-    }
-
-
-
-    public interface IBlogPostRepo
-    {
-        List<BlogPost> GetAllBlogPosts();
-        BlogPost GetBlogPostById(int id);
-
     }
 }
