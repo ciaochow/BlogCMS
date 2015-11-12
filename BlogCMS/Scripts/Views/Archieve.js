@@ -6,32 +6,13 @@
 
         window.location.href = "/Home/ListByMonth?id=" + $(this).text();
 
-        //var URL = "/API/categoryAPI/";
-
-        //alert($(this).val());
-
-        //$.ajax({
-        //    type: "Get",
-        //    url: URL,
-        //    datatype: "json",
-        //    success: function (postList) {
-        //        alert("got it");
-        //        window.location.href = "/Home/ListByCategory?id=" + $(this).text();
-        //        //showPostList();  
-        //    },
-        //    fail: function() {
-        //        alert("no good");
-        //    },
-        //    data: { category : $(this).text() },
-        //    async: false
-        //});
 
     });
 
 });
 
 function loadArchieve() {
-    //$('#category1').html("hihihihihi");
+ 
     var URL = "/API/ArchieveAPI/";
 
     $.ajax({
@@ -56,8 +37,6 @@ function BuildArchieveLinks(archieves) {
 
     var archieve1 = $('#archieve1');
     var archieve2 = $('#archieve2');
-
-  
 
     var archievelist1 = $("<div></div>").addClass("archieve");
     var archievelist2 = $("<div></div>").addClass("archieve");

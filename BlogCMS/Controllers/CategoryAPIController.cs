@@ -20,32 +20,11 @@ namespace BlogCMS.Controllers
             return categories;
         }
 
-        //public List<BlogPost> Get(string category)
-        //{
-        //    List<BlogPost> posts = new List<BlogPost>();
-
-        //    posts = crepo.GetPostsByCategory(category);
-
-        //    return posts;
-        //}
 
         public void Post(string category)
         {
             crepo.AddCategory(category);
-
-           // var response = Request.CreateResponse(HttpStatusCode.Created, category);
-
-           // return response;
         }
-
-        //public HttpResponseMessage Post(string category)
-        //{
-        //    crepo.AddCategory(category);
-
-        //    var response = Request.CreateResponse(HttpStatusCode.Created, category);
-
-        //    return response;
-        //}
 
     }
 }

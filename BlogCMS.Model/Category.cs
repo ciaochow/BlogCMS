@@ -10,6 +10,5 @@ namespace BlogCMS.Model
     {
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
-        //public List<int> PostsInCategory { get; set; }
     }
 }

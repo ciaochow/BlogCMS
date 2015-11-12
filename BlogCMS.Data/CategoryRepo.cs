@@ -12,13 +12,6 @@ namespace BlogCMS.Data
 {
     public class CategoryRepo
     {
-        //private string connectionString;
-
-        public CategoryRepo()
-        {
-            // connectionString = ConfigurationManager.ConnectionStrings["BlogCMS"].ConnectionString;
-        }
-
         public List<Category> GetAllCategories()
         {
             List<Category> categories = new List<Category>();
@@ -41,13 +34,13 @@ namespace BlogCMS.Data
 
             StringBuilder query = new StringBuilder();
 
-            query.Append("select *  ");
+            query.Append("select CategoryName ");
             query.Append("from Category ");
-            query.Append("where cateogryID = @categoryid ");
+            query.Append("where categoryID = @categoryid ");
 
             using (SqlConnection cn = new SqlConnection(Connection.ConnectionString))
             {
-               category = cn.Query<Category>(query.ToString(), new { categoryid = id }).FirstOrDefault().ToString();
+               category = cn.Query<string>(query.ToString(), new { categoryid = id }).FirstOrDefault();//.ToString();
             }
             return category;
         }
